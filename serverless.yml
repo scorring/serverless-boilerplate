@@ -41,7 +41,7 @@ custom:
   # Custom Domain (configured by stage)
   customDomain:
     domainName: ${file(config/serverless.${self:provider.stage}.yml):config.domain}
-    basePath: '/demo/'
+    basePath: 'demo'
     stage: ${self:provider.stage}
     createRoute53Record: true
 
@@ -61,7 +61,7 @@ functions:
     handler: src/handlers/events.list
     events:
       - http:
-          path: events
+          path: /events
           method: get
           cors:
             origin: '*'
@@ -78,7 +78,7 @@ functions:
     handler: src/handlers/events.show
     events:
       - http:
-          path: events/{id}
+          path: /events/{id}
           method: get
           cors:
             origin: '*'
@@ -99,7 +99,7 @@ functions:
     handler: src/handlers/tasks.list
     events:
       - http:
-          path: tasks
+          path: /tasks
           method: get
           cors:
             origin: '*'
@@ -116,7 +116,7 @@ functions:
     handler: src/handlers/tasks.show
     events:
       - http:
-          path: tasks/{id}
+          path: /tasks/{id}
           method: get
           cors:
             origin: '*'

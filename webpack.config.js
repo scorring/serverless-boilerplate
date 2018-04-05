@@ -4,6 +4,7 @@ const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
     entry: slsw.lib.entries,
+    mode: "production",
     externals: [nodeExternals()],
     target: 'node',
     resolve: {
