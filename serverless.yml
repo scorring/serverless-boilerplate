@@ -36,6 +36,11 @@ provider:
           ResourceType:
             - AWS::EC2::Instance
   environment:
+    DB_HOSTNAME: ${file(config/serverless.${self:provider.stage}.yml):config.database.hostname}
+    DB_PORT: ${file(config/serverless.${self:provider.stage}.yml):config.database.port}
+    DB_USERNAME: ${file(config/serverless.${self:provider.stage}.yml):config.database.username}
+    DB_PASSWORD: ${file(config/serverless.${self:provider.stage}.yml):config.database.password}
+    DB_DATABASE: ${file(config/serverless.${self:provider.stage}.yml):config.database.database}
 
 custom:
   # Custom Domain (configured by stage)

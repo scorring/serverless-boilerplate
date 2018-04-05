@@ -1,4 +1,4 @@
-import * as BbPromise from 'bluebird'
+import * as BbPromise from 'bluebird';
 import {BaseController} from "./BaseController";
 
 class TasksController extends BaseController {
@@ -20,7 +20,7 @@ class TasksController extends BaseController {
         response.statusCode = 200;
         response.body = {
             message: "Hey !",
-            from: '['+ request.event().pathParameters.id +'] Fifth lambda ;-)'
+            from: '[' + request.event().pathParameters.id + '] Fifth lambda ;-)'
         };
         response.headers['X-Request-ID'] = 4242;
         return BbPromise.resolve()
