@@ -1,0 +1,9 @@
+config:
+  subnetIds:
+    - subnet-7xxxxxxx
+    - subnet-9xxxxxxx
+    - subnet-cxxxxxxx
+  securityGroupIds:
+    - sg-3xxxxxxx
+
+  domain: dev-api-in.domain.com

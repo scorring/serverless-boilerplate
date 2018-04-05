@@ -1,0 +1,28 @@
+{
+  "license": "MIT",
+  "name": "sls-template",
+  "email": "felix@skont.io",
+  "version": "1.0.0-SNAPSHOT",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-source-map-support": "^2.0.1",
+    "babel-preset-env": "^1.6.1",
+    "serverless": "^1.26.1",
+    "serverless-domain-manager": "^2.3.6",
+    "serverless-offline": "^3.18.0",
+    "serverless-webpack": "^5.1.1",
+    "ts-loader": "^4.1.0",
+    "typescript": "^2.8.1",
+    "webpack": "^4.4.1",
+    "webpack-node-externals": "^1.6.0"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "bluebird": "^3.5.1"
+  },
+  "engines": {
+    "node": ">= 6.10.0",
+    "npm": ">= 5.8.0"
+  }
+}

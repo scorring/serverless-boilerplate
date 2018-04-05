@@ -1,0 +1,134 @@
+service: events
+
+# frameworkVersion: "=X.X.X"
+plugins:
+  - serverless-offline
+  - serverless-webpack
+  - serverless-domain-manager
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: ${opt:stage, 'dev'}
+  region: us-west-2
+  deploymentBucket:
+      #name: com.events.serverless.${self:provider.region}.deploys
+      memorySize: 256
+      serverSideEncryption: AES256
+  vpc:
+    securityGroupIds: ${file(config/serverless.${self:provider.stage}.yml):config.securityGroupIds}
+    subnetIds: ${file(config/serverless.${self:provider.stage}.yml):config.subnetIds}
+  stackTags:
+    TYPE: ServerLess
+  stackPolicy:
+    - Effect: Allow
+      Principal: "*"
+      Action: "Update:*"
+      Resource: "*"
+    - Effect: Deny
+      Principal: "*"
+      Action:
+        - Update:Replace
+        - Update:Delete
+      Resource: "*"
+      Condition:
+        StringEquals:
+          ResourceType:
+            - AWS::EC2::Instance
+  environment:
+
+custom:
+  # Custom Domain (configured by stage)
+  customDomain:
+    domainName: ${file(config/serverless.${self:provider.stage}.yml):config.domain}
+    basePath: '/demo/'
+    stage: ${self:provider.stage}
+    createRoute53Record: true
+
+  # Webpack Config
+  webpack:
+    webpackConfig: 'webpack.config.js'
+    includeModules: true
+
+  # Config for serverless-offline
+  serverless-offline:
+      babelOptions:
+        presets: ["env"]
+
+# Endpoints
+functions:
+  eventsList:
+    handler: src/handlers/events.list
+    events:
+      - http:
+          path: events
+          method: get
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false
+
+  eventsShow:
+    handler: src/handlers/events.show
+    events:
+      - http:
+          path: events/{id}
+          method: get
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false
+          request:
+            parameters:
+              paths:
+                id: true
+
+  tasksList:
+    handler: src/handlers/tasks.list
+    events:
+      - http:
+          path: tasks
+          method: get
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false
+
+  tasksShow:
+    handler: src/handlers/tasks.show
+    events:
+      - http:
+          path: tasks/{id}
+          method: get
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false
+          request:
+            parameters:
+              paths:
+                id: true
