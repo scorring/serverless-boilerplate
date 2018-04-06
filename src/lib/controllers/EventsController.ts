@@ -8,7 +8,7 @@ export class EventsController extends BaseController {
     }
 
     index(request: HttpRequest, response: HttpResponse): any {
-        return new Promise(function (resolve, reject) {
+        return new Promise((resolve, reject) => {
             response.statusCode = 200;
             response.body = {
                 message: "Hey !",
@@ -20,7 +20,7 @@ export class EventsController extends BaseController {
     }
 
     show(request: HttpRequest, response: HttpResponse): any {
-        return new Promise(function (resolve, reject) {
+        return new Promise((resolve, reject) => {
             response.statusCode = 200;
             response.body = {
                 message: "Hey !",

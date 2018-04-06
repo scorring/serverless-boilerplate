@@ -62,6 +62,12 @@ custom:
 
 # Endpoints
 functions:
+  # Function to check JWT validity
+  authorize:
+    handler: src/handlers/jwt.check
+    environment:
+      JWT_PUBLIC_KEY: ${file(config/serverless.${self:provider.stage}.yml):config.auth.jwt_public_key}
+
   eventsList:
     handler: src/handlers/events.list
     events:
@@ -144,6 +150,11 @@ functions:
     timeout: 2
     events:
       - http:
+          authorizer:
+            name: authorize
+            resultTtlInSeconds: 60
+            identitySource: method.request.header.authorization
+
           path: /airports
           method: get
           cors:

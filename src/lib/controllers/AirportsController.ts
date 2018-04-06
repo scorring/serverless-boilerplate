@@ -1,16 +1,19 @@
-import {BaseController} from "./BaseController";
 import * as mysql from 'mysql2/promise';
+import {BaseController} from "./BaseController";
+import {HttpRequest} from "../models/http/HttpRequest";
+import {HttpResponse} from "../models/http/HttpResponse";
 
 export class AirportsController extends BaseController {
     constructor() {
         super()
     }
 
-    list(request, response) {
-        return new Promise(function (resolve, reject) {
+    list(request: HttpRequest, response: HttpResponse) {
+        return new Promise((resolve, reject) => {
                 response.statusCode = 200;
                 response.headers['X-Authorized'] = 'yes';
                 response.body.airports = [];
+                response.body.user = request.event().requestContext.authorizer.email;
 
                 let g_conn = undefined;
 
@@ -24,12 +27,13 @@ export class AirportsController extends BaseController {
                     g_conn = conn;
                     return conn.query('SELECT id_airport FROM airports')
                 }).then(([rows, fields]) => {
-                    rows.forEach(function (item) {
-                        console.log(item.id_airport);
+                    rows.forEach((item) => {
                         response.body.airports.push(item.id_airport);
                     });
-                    g_conn.end().then(() => response(response)).catch((error) => reject(error));
-                    resolve(response);
+                    g_conn.end()
+                        .then(() => resolve(response))
+                        .catch((error) => reject(error));
+
                 }).catch((error) => {
                     reject(error);
                 });
