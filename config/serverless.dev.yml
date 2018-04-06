@@ -7,3 +7,10 @@ config:
     - sg-3xxxxxxx
 
   domain: dev-api-in.domain.com
+
+  database:
+    hostname: db.internal.domain.com
+    port: 3306
+    username: root
+    password: toor
+    database: db

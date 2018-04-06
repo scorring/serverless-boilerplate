@@ -10,7 +10,7 @@ provider:
   name: aws
   runtime: nodejs6.10
   stage: ${opt:stage, 'dev'}
-  region: us-west-2
+  region: ${file(config/serverless.${self:provider.stage}.yml):config.region}
   deploymentBucket:
       #name: com.events.serverless.${self:provider.region}.deploys
       memorySize: 256
@@ -137,3 +137,22 @@ functions:
             parameters:
               paths:
                 id: true
+
+  tasksAirports:
+    handler: src/handlers/airports.list
+    memorySize: 128
+    timeout: 2
+    events:
+      - http:
+          path: /airports
+          method: get
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false

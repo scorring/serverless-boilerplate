@@ -1,6 +1,4 @@
-class BaseController {
+export class BaseController {
     constructor() {
     }
 }
-
-export { BaseController }

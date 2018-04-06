@@ -9,13 +9,16 @@ function BuildHandler(fnCtor: new (...args: any[]) => BaseController, method: st
         let response = new HttpResponse();
 
         eval("ctrl." + method)(request, response)
-            .then(() => ({
-                statusCode: response.statusCode,
-                headers: response.headers,
-                body: JSON.stringify(response.body)
-            }))
-            .asCallback(cb)
+            .then(function (resp) {
+                console.log("Success");
+                if (typeof response.body != "string") {
+                    response.body = JSON.stringify(response.body);
+                }
+                cb(undefined, response)
+            }).catch(function (error) {
+            cb(error, undefined)
+        });
     }
 }
 
-export { BuildHandler }
+export {BuildHandler}
