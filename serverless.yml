@@ -8,13 +8,24 @@ plugins:
 
 provider:
   name: aws
-  runtime: nodejs6.10
+  runtime: nodejs8.10
   stage: ${opt:stage, 'dev'}
   region: ${file(config/serverless.${self:provider.stage}.yml):config.region}
   deploymentBucket:
       #name: com.events.serverless.${self:provider.region}.deploys
       memorySize: 256
       serverSideEncryption: AES256
+  iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - lambda:InvokeFunction
+        Resource:
+          - Fn::Join:
+            - ':'
+            - - 'arn:aws:lambda'
+              - Ref: 'AWS::Region'
+              - Ref: 'AWS::AccountId'
+              - function:${self:service}-${self:provider.stage}-eventsList
   vpc:
     securityGroupIds: ${file(config/serverless.${self:provider.stage}.yml):config.securityGroupIds}
     subnetIds: ${file(config/serverless.${self:provider.stage}.yml):config.subnetIds}
@@ -73,6 +84,25 @@ functions:
     events:
       - http:
           path: /events
+          method: get
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false
+
+  eventsRelist:
+    handler: src/handlers/events.relist
+    environment:
+      LIST_ARN: ${self:service}-${self:provider.stage}-eventsList
+    events:
+      - http:
+          path: /reevents
           method: get
           cors:
             origin: '*'
@@ -152,7 +182,7 @@ functions:
       - http:
           authorizer:
             name: authorize
-            resultTtlInSeconds: 60
+            resultTtlInSeconds: 0
             identitySource: method.request.header.authorization
 
           path: /airports
