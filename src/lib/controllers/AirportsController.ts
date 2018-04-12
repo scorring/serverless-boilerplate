@@ -25,7 +25,7 @@ export class AirportsController extends BaseController {
                     database: process.env['DB_DATABASE']
                 }).then((conn) => {
                     g_conn = conn;
-                    return conn.query('SELECT id_airport FROM airports')
+                    return conn.query('SELECT id_airport FROM airports WHERE active = 1')
                 }).then(([rows, fields]) => {
                     rows.forEach((item) => {
                         response.body.airports.push(item.id_airport);

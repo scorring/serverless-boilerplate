@@ -21,13 +21,11 @@ export class JwtController extends BaseController {
                             Resource: request.event().methodArn,
                         },
                     ],
-                },
-                context: undefined,
+                }
             };
             User.build(request.event().authorizationToken).then((user: User) => {
                 policy.principalId = user.id;
                 policy.policyDocument.Statement[0].Effect = 'Allow';
-                policy.context = user;
                 resolve(policy);
             }).catch(() => {
                 policy.policyDocument.Statement[0].Effect = 'Deny';
