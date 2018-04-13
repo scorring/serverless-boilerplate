@@ -31,13 +31,9 @@ node('aws') {
     sh($/npm test/$)
   }
 
-  if (env.BRANCH_NAME == "master" && false) {
-    stage('Package') {
-      sh($/npm run package/$)
-    }
-
+  if (env.BRANCH_NAME == "master") {
     stage('AWS: Deploy') {
-      sh($/./node_modules/serverless/bin/serverless deploy --env ${target} --stage ${target}/$)
+      sh($/TARGET=${target} npm run deploy/$)
     }
   }
 

@@ -5,7 +5,8 @@
   "version": "1.0.0-SNAPSHOT",
   "scripts": {
     "package": "./node_modules/serverless/bin/serverless package",
-    "test": "./node_modules/mocha/bin/mocha --reporter spec test"
+    "test": "./node_modules/mocha/bin/mocha --reporter spec test",
+    "deploy": "./node_modules/serverless/bin/serverless deploy --env ${TARGET} --stage ${TARGET}"
   },
   "devDependencies": {
     "@types/node": "^9.6.2",
