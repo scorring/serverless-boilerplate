@@ -13,7 +13,6 @@ export class AirportsController extends BaseController {
                 response.statusCode = 200;
                 response.headers['X-Authorized'] = 'yes';
                 response.body.airports = [];
-                response.body.user = request.event().requestContext.authorizer.email;
 
                 let g_conn = undefined;
 

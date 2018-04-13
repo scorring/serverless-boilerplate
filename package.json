@@ -3,6 +3,10 @@
   "name": "sls-template",
   "email": "felix@skont.io",
   "version": "1.0.0-SNAPSHOT",
+  "scripts": {
+    "package": "./node_modules/serverless/bin/serverless package",
+    "test": "./node_modules/mocha/bin/mocha --reporter spec test"
+  },
   "devDependencies": {
     "@types/node": "^9.6.2",
     "babel-core": "^6.26.0",
