@@ -10,7 +10,9 @@ provider:
   name: aws
   runtime: nodejs8.10
   stage: ${opt:stage, 'dev'}
-  region: ${file(config/serverless.${self:provider.stage}.yml):config.region}
+  region: ${file(config/serverless.${self:provider.stage}.yml):config.region, 'eu-west-1'}
+  profile: ${file(config/serverless.${self:provider.stage}.yml):config.profile, 'default'}
+
   deploymentBucket:
       #name: com.events.serverless.${self:provider.region}.deploys
       memorySize: 256
@@ -46,12 +48,7 @@ provider:
         StringEquals:
           ResourceType:
             - AWS::EC2::Instance
-  environment:
-    DB_HOSTNAME: ${file(config/serverless.${self:provider.stage}.yml):config.database.hostname}
-    DB_PORT: ${file(config/serverless.${self:provider.stage}.yml):config.database.port}
-    DB_USERNAME: ${file(config/serverless.${self:provider.stage}.yml):config.database.username}
-    DB_PASSWORD: ${file(config/serverless.${self:provider.stage}.yml):config.database.password}
-    DB_DATABASE: ${file(config/serverless.${self:provider.stage}.yml):config.database.database}
+  environment: ${file(config/serverless.${self:provider.stage}.yml):config.environment}
 
 custom:
   # Custom Domain (configured by stage)
@@ -77,7 +74,7 @@ functions:
   authorize:
     handler: src/handlers/jwt.check
     environment:
-      JWT_PUBLIC_KEY: ${file(config/serverless.${self:provider.stage}.yml):config.auth.jwt_public_key}
+      JWT_PUBLIC_KEY: ${file(config/serverless.${self:provider.stage}.yml):config.auth.jwt_public_key, ''}
 
   eventsList:
     handler: src/handlers/events.list

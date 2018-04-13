@@ -8,6 +8,9 @@ config:
 
   domain: dev-api-in.domain.com
 
+  environment:
+    VAR: Demo
+
   database:
     hostname: db.internal.domain.com
     port: 3306
