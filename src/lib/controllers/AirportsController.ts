@@ -8,7 +8,7 @@ export class AirportsController extends BaseController {
         super()
     }
 
-    list(request: HttpRequest, response: HttpResponse) {
+    list(request: HttpRequest, response: HttpResponse): Promise<any> {
         return new Promise((resolve, reject) => {
                 response.statusCode = 200;
                 response.headers['X-Authorized'] = 'yes';

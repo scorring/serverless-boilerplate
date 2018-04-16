@@ -8,7 +8,7 @@ function BuildHandler(fnCtor: new (...args: any[]) => BaseController, method: st
         let request = new HttpRequest(event, context);
         let response = new HttpResponse();
 
-        eval("ctrl." + method)(request, response)
+        eval("ctrl."+method+"(request, response)")
             .then(function (resp) {
                 console.log("Success");
                 if (typeof response.body != "string") {

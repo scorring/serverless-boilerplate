@@ -8,7 +8,7 @@ export class JwtController extends BaseController {
         super()
     }
 
-    check(request: HttpRequest, response: HttpResponse) {
+    check(request: HttpRequest, response: HttpResponse): Promise<any> {
         return new Promise((resolve, reject) => {
             const policy = {
                 principalId: 1,

@@ -8,7 +8,9 @@ export class EventsController extends BaseController {
         super()
     }
 
-    index(request: HttpRequest, response: HttpResponse): any {
+    index(request: HttpRequest, response: HttpResponse): Promise<any> {
+        console.log(this);
+        console.log(request.eventBody());
         return new Promise((resolve, reject) => {
             response.statusCode = 200;
             response.body = {
@@ -18,9 +20,9 @@ export class EventsController extends BaseController {
             response.headers['X-Request-ID'] = 4242;
             resolve(response)
         })
-    }
+    };
 
-    relist(request: HttpRequest, response: HttpResponse): any {
+    relist(request: HttpRequest, response: HttpResponse): Promise<any> {
         return new Promise((resolve, reject) => {
             const lambda = new AWS.Lambda();
             lambda.invoke({FunctionName: process.env['LIST_ARN']}, (err, data) => {
@@ -41,7 +43,7 @@ export class EventsController extends BaseController {
         });
     }
 
-    show(request: HttpRequest, response: HttpResponse): any {
+    show(request: HttpRequest, response: HttpResponse): Promise<any> {
         return new Promise((resolve, reject) => {
             response.statusCode = 200;
             response.body = {
