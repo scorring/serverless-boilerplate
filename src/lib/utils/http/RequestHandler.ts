@@ -8,16 +8,14 @@ function BuildHandler(fnCtor: new (...args: any[]) => BaseController, method: st
         let request = new HttpRequest(event, context);
         let response = new HttpResponse();
 
-        eval("ctrl."+method+"(request, response)")
-            .then(function (resp) {
+        eval("ctrl." + method + "(request, response)")
+            .then(function (resp: HttpResponse) {
                 console.log("Success");
-                if (typeof response.body != "string") {
-                    response.body = JSON.stringify(response.body);
-                }
-                cb(undefined, response)
-            }).catch(function (error) {
-            cb(error, undefined)
-        });
+                cb(undefined, response.toAws())
+            })
+            .catch(function (resp: HttpResponse) {
+                cb(undefined, response.toAws())
+            });
     }
 }
 

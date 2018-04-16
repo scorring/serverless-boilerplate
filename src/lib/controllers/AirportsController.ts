@@ -8,11 +8,12 @@ export class AirportsController extends BaseController {
         super()
     }
 
-    list(request: HttpRequest, response: HttpResponse): Promise<any> {
+    list(request: HttpRequest, response: HttpResponse): Promise<HttpResponse> {
         return new Promise((resolve, reject) => {
-                response.statusCode = 200;
-                response.headers['X-Authorized'] = 'yes';
-                response.body.airports = [];
+                response
+                    .setStatus(200)
+                    .setHeaders({'X-Authorized': 'yes'})
+                    .setBody({airports: []});
 
                 let g_conn = undefined;
 

@@ -7,24 +7,26 @@ export class TasksController extends BaseController {
 
     index(request, response) {
         return new Promise((resolve, reject) => {
-            response.statusCode = 200;
-            response.body = {
-                message: "Hey !",
-                from: 'Fourth lambda ;-)'
-            };
-            response.headers['X-Request-ID'] = 4242;
+            response
+                .setStatus(200)
+                .setHeaders({'X-Request-ID': 4242})
+                .setBody({
+                    message: "Hey !",
+                    from: 'Fourth lambda ;-)'
+                });
             resolve(response);
         })
     }
 
     show(request, response) {
         return new Promise((resolve, reject) => {
-            response.statusCode = 200;
-            response.body = {
-                message: "Hey !",
-                from: 'Fifth lambda ;-)'
-            };
-            response.headers['X-Request-ID'] = 4242;
+            response
+                .setStatus(200)
+                .setHeaders({'X-Request-ID': 4242})
+                .setBody({
+                    message: "Hey !",
+                    from: 'Fifth lambda ;-)'
+                });
             resolve(response);
         });
     }
