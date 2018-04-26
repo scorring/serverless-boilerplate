@@ -6,7 +6,8 @@
   "scripts": {
     "package": "./node_modules/serverless/bin/serverless package",
     "test": "./node_modules/mocha/bin/mocha --reporter spec test",
-    "deploy": "./node_modules/serverless/bin/serverless deploy --env ${TARGET} --stage ${TARGET}"
+    "deploy": "./node_modules/serverless/bin/serverless deploy --env ${TARGET} --stage ${TARGET}",
+    "debug": "SLS_DEBUG=* node --inspect ./node_modules/.bin/serverless offline --stage local"
   },
   "devDependencies": {
     "@types/node": "^9.6.2",
@@ -20,6 +21,7 @@
     "serverless-domain-manager": "^2.3.6",
     "serverless-offline": "^3.18.0",
     "serverless-webpack": "^5.1.1",
+    "source-map-support": "^0.5.5",
     "ts-loader": "^4.1.0",
     "typescript": "^2.8.1",
     "webpack": "^4.5.0",
