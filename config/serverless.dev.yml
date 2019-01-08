@@ -10,10 +10,14 @@ config:
 
   environment:
     VAR: Demo
+    REGION: local
+    ENDPOINT: http://localhost:8000
+    ACCESSKEYID: "ACID"
+    SECRETACCESSKEY: "SECRET"
+    EVENTS_TABLE: NOTIF_TOKEN_SAVER_EVENTS
 
-  database:
-    hostname: db.internal.domain.com
-    port: 3306
-    username: root
-    password: toor
-    database: db
+  dynamodb:
+    notif_token_saver:
+      table_suffix: "tokens"
+      rcu: 5
+      wcu: 5

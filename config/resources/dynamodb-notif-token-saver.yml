@@ -1,0 +1,32 @@
+---
+Resources:
+  AwsNotifTokenSaverDynamoDbTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName:
+        Fn::Join:
+          - ""
+          -
+            - ${self:service}
+            - '-'
+            - ${self:provider.stage}
+            - '-'
+            - ${file(config/serverless.${self:provider.stage}.yml):config.dynamodb.notif_token_saver.table_suffix}
+      KeySchema:
+        - AttributeName: userId
+          KeyType: HASH
+      AttributeDefinitions:
+        - AttributeName: userId
+          AttributeType: S
+        - AttributeName: token
+          AttributeType: S
+        - AttributeName: timestamp
+          AttributeType: N
+        - AttributeName: ttl
+          AttributeType: N
+      ProvisionedThroughput:
+        ReadCapacityUnits: ${file(config/serverless.${self:provider.stage}.yml):config.dynamodb.notif_token_saver.rcu}
+        WriteCapacityUnits: ${file(config/serverless.${self:provider.stage}.yml):config.dynamodb.notif_token_saver.wcu}
+      TimeToLiveSpecification:
+        AttributeName: ttl
+        Enabled: True
