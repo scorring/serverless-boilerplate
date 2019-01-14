@@ -13,6 +13,7 @@ export class EventRepository {
     }
 
     public save(iEvent: any): Promise<boolean> {
+
         let event: Event = {
             userId: iEvent.userId,
             token: iEvent.token,
@@ -24,11 +25,16 @@ export class EventRepository {
             Item: event,
             TableName: process.env.EVENTS_TABLE,
         };
+
+        console.log("Event to save: " + JSON.stringify(event))
+
         return new Promise<boolean>((resolve, reject) => {
             this.docClient.put(eventParams, (err, data) => {
                 if (!err) {
                     resolve(true);
                 } else {
+                    console.log("ERROR")
+                    console.log(err)
                     resolve(false);
                 }
             });

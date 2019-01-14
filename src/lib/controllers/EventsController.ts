@@ -13,7 +13,7 @@ export class EventsController extends BaseController {
 
     index(request: HttpRequest, response: HttpResponse): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.eventRepository.save(request.event()).then((evt) => {
+            this.eventRepository.save(request.body()).then((evt) => {
                 response
                     .setStatus(201)
                     .setHeaders({'X-Request-ID': 4242})
