@@ -4,8 +4,8 @@ service: NotifTokenSaver
 plugins:
   - serverless-offline
   - serverless-webpack
-  - serverless-domain-manager
-  - serverless-dynamodb-local
+  # - serverless-domain-manager
+  # - serverless-dynamodb-local
 
 provider:
   name: aws
@@ -14,16 +14,16 @@ provider:
   stage: ${opt:stage, 'dev'}
   region: ${file(config/serverless.${self:provider.stage}.yml):config.region, 'eu-west-1'}
   profile: ${file(config/serverless.${self:provider.stage}.yml):config.profile, 'default'}
-  # role: ${file(config/serverless.${self:provider.stage}.yml):config.role}
+  role: ${file(config/serverless.${self:provider.stage}.yml):config.role}
 
   deploymentBucket:
       name: seb-sls-deployments
       memorySize: 256
       serverSideEncryption: AES256
   
-  vpc:
-    securityGroupIds: ${file(config/serverless.${self:provider.stage}.yml):config.securityGroupIds}
-    subnetIds: ${file(config/serverless.${self:provider.stage}.yml):config.subnetIds}
+  # vpc:
+  #   securityGroupIds: ${file(config/serverless.${self:provider.stage}.yml):config.securityGroupIds}
+  #   subnetIds: ${file(config/serverless.${self:provider.stage}.yml):config.subnetIds}
   stackTags:
     TYPE: ServerLess
   stackPolicy:

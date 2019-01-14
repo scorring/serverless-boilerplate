@@ -7,7 +7,8 @@ config:
     - sg-3xxxxxxx
 
   domain: dev-api-in.domain.com
-
+  role: arn:aws:iam::271755284775:role/DCP_LambdaVPC_Role
+  
   environment:
     VAR: Demo
     REGION: local

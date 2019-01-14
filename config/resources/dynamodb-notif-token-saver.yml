@@ -18,12 +18,6 @@ Resources:
       AttributeDefinitions:
         - AttributeName: userId
           AttributeType: S
-        - AttributeName: token
-          AttributeType: S
-        - AttributeName: timestamp
-          AttributeType: N
-        - AttributeName: ttl
-          AttributeType: N
       ProvisionedThroughput:
         ReadCapacityUnits: ${file(config/serverless.${self:provider.stage}.yml):config.dynamodb.notif_token_saver.rcu}
         WriteCapacityUnits: ${file(config/serverless.${self:provider.stage}.yml):config.dynamodb.notif_token_saver.wcu}
